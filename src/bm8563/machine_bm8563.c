@@ -322,4 +322,4 @@ const mp_obj_type_t machine_hw_bm8563_type = {
     .locals_dict = (mp_obj_dict_t *)&hw_bm8563_globals,
 };
 
-MP_REGISTER_MODULE(MP_QSTR_bm8563, machine_hw_bm8563_type, MODULE_BM8563_ENABLED);
+MP_REGISTER_MODULE(MP_QSTR_bm8563, machine_hw_bm8563_type);

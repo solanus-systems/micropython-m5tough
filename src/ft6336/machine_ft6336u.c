@@ -199,4 +199,4 @@ const mp_obj_type_t machine_hw_ft6336u_type = {
     .locals_dict = (mp_obj_dict_t *)&hw_ft6336u_globals,
 };
 
-MP_REGISTER_MODULE(MP_QSTR_ft6336u, machine_hw_ft6336u_type, MODULE_FT6336_ENABLED);
+MP_REGISTER_MODULE(MP_QSTR_ft6336u, machine_hw_ft6336u_type);

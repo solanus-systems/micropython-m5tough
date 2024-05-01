@@ -427,4 +427,4 @@ const mp_obj_type_t machine_hw_axp192_type = {
 };
 
 
-MP_REGISTER_MODULE(MP_QSTR_axp192, machine_hw_axp192_type, MODULE_AXP192_ENABLED);
+MP_REGISTER_MODULE(MP_QSTR_axp192, machine_hw_axp192_type);

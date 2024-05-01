@@ -152,4 +152,4 @@ const mp_obj_type_t machine_hw_ili9341_type = {
     .locals_dict = (mp_obj_dict_t *)&hw_ili9341_globals,
 };
 
-MP_REGISTER_MODULE(MP_QSTR_ili9341c, machine_hw_ili9341_type, MODULE_ILI9341_ENABLED);
+MP_REGISTER_MODULE(MP_QSTR_ili9341c, machine_hw_ili9341_type);
