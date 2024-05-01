@@ -46,7 +46,7 @@ STATIC TFT_t display;
 STATIC machine_hw_ili9341_obj_t machine_hw_ili9341_obj;
 
 STATIC void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
-    mp_int_t ili9341_code = 0;
+    // mp_int_t ili9341_code = 0;
 
     mp_printf(&mp_plat_print, "STEPA [OK].\n");
 
@@ -59,13 +59,13 @@ STATIC void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
     mp_printf(&mp_plat_print, "LDC connection [OK].\n");
 }
 
-STATIC void machine_hw_ili9341_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
-	//machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
+// STATIC void machine_hw_ili9341_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+// 	machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
 	
-    //mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
-    //    self->port, self->scl, self->sda, I2C_APB_CLK_FREQ / (h + l));
+//     mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
+//        self->port, self->scl, self->sda, I2C_APB_CLK_FREQ / (h + l));
 
-}
+// }
 
 mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *all_args) {
     // Parse args
@@ -90,7 +90,7 @@ mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, s
     // Get static peripheral object
     machine_hw_ili9341_obj_t *self = (machine_hw_ili9341_obj_t *)&machine_hw_ili9341_obj;
 
-    bool first_init = false;
+    // bool first_init = false;
     if (self->base.type == NULL) {
         // Created for the first time, set default pins
         self->base.type = &machine_hw_ili9341_type;
@@ -106,7 +106,7 @@ mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, s
         self->cs = args[ARG_cs].u_int;
         self->dc = args[ARG_dc].u_int;
         
-        first_init = true;
+        // first_init = true;
     }
 
     mp_printf(&mp_plat_print, "STEP1 [OK].\n");
