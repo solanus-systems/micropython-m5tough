@@ -418,13 +418,12 @@ STATIC const mp_rom_map_elem_t hw_axp192_globals_table[] = {
 
 STATIC MP_DEFINE_CONST_DICT(hw_axp192_globals, hw_axp192_globals_table);
 
-const mp_obj_type_t machine_hw_axp192_type = {
-	{ &mp_type_type },
-    .name = MP_QSTR_axp192,
-    //.print = machine_hw_axp192_print,
-    .make_new = machine_hw_axp192_make_new,
-    .locals_dict = (mp_obj_dict_t *)&hw_axp192_globals,
-};
-
+MP_DEFINE_CONST_OBJ_TYPE(
+    machine_hw_axp192_type,
+    MP_QSTR_axp192,
+    MP_TYPE_FLAG_NONE,
+    make_new, machine_hw_axp192_make_new,
+    locals_dict, &hw_axp192_globals
+);
 
 MP_REGISTER_MODULE(MP_QSTR_axp192, machine_hw_axp192_type);
