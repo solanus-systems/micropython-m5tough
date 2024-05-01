@@ -1,16 +1,15 @@
 /*
-* Copyright 2020 LeMaRiva|Tech (Mauro Riva) info@lemariva.com
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*     http://www.apache.org/licenses/LICENSE-2.0
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
+ * Copyright 2020 LeMaRiva|Tech (Mauro Riva) info@lemariva.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -27,8 +26,8 @@
 #include "machine_ili9341.h"
 #include <math.h>
 
-
-typedef struct _machine_hw_ili9341_obj_t {
+typedef struct _machine_hw_ili9341_obj_t
+{
     mp_obj_base_t base;
     TFT_t *display;
     uint8_t mosi;
@@ -40,12 +39,12 @@ typedef struct _machine_hw_ili9341_obj_t {
     uint8_t bl;
 } machine_hw_ili9341_obj_t;
 
-
 const mp_obj_type_t machine_hw_ili9341_type;
 static TFT_t display;
 static machine_hw_ili9341_obj_t machine_hw_ili9341_obj;
 
-static void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
+static void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self)
+{
     // mp_int_t ili9341_code = 0;
 
     mp_printf(&mp_plat_print, "STEPA [OK].\n");
@@ -61,26 +60,38 @@ static void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
 
 // static void machine_hw_ili9341_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
 // 	machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
-	
+
 //     mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
 //        self->port, self->scl, self->sda, I2C_APB_CLK_FREQ / (h + l));
 
 // }
 
-mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *all_args) {
+mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *all_args)
+{
     // Parse args
-	enum { ARG_mosi, ARG_miso, ARG_sclk, ARG_dc, ARG_cs, ARG_width, ARG_height, ARG_offsetX, ARG_offsetY};
+    enum
+    {
+        ARG_mosi,
+        ARG_miso,
+        ARG_sclk,
+        ARG_dc,
+        ARG_cs,
+        ARG_width,
+        ARG_height,
+        ARG_offsetX,
+        ARG_offsetY
+    };
     static const mp_arg_t allowed_args[] = {
-        { MP_QSTR_mosi, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 23} },
-        { MP_QSTR_miso, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 38} },
-        { MP_QSTR_sclk, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 18} },
-        { MP_QSTR_dc, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 15} },
-        { MP_QSTR_cs, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 5} },
-        { MP_QSTR_width, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 320} },
-        { MP_QSTR_height, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 240} },
-        { MP_QSTR_offsetX, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 0} },
-        { MP_QSTR_offsetY, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 0} },
-        
+        {MP_QSTR_mosi, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 23}},
+        {MP_QSTR_miso, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 38}},
+        {MP_QSTR_sclk, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 18}},
+        {MP_QSTR_dc, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 15}},
+        {MP_QSTR_cs, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 5}},
+        {MP_QSTR_width, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 320}},
+        {MP_QSTR_height, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 240}},
+        {MP_QSTR_offsetX, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 0}},
+        {MP_QSTR_offsetY, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 0}},
+
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     mp_arg_parse_all_kw_array(n_args, n_kw, all_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
@@ -91,7 +102,8 @@ mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, s
     machine_hw_ili9341_obj_t *self = (machine_hw_ili9341_obj_t *)&machine_hw_ili9341_obj;
 
     // bool first_init = false;
-    if (self->base.type == NULL) {
+    if (self->base.type == NULL)
+    {
         // Created for the first time, set default pins
         self->base.type = &machine_hw_ili9341_type;
         self->display = &display;
@@ -105,7 +117,7 @@ mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, s
         self->sclk = args[ARG_sclk].u_int;
         self->cs = args[ARG_cs].u_int;
         self->dc = args[ARG_dc].u_int;
-        
+
         // first_init = true;
     }
 
@@ -117,7 +129,8 @@ mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, s
     return MP_OBJ_FROM_PTR(self);
 }
 
-static mp_obj_t mp_ili9341_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_ili9341_irq_mode(mp_uint_t n_args, const mp_obj_t *args)
+{
     mp_int_t ili9341_code = -1;
     // uint8_t mode;
 
@@ -130,16 +143,15 @@ static mp_obj_t mp_ili9341_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
 
     // ili9341_code = write_g_mode(mode);
 
-    return mp_obj_new_int(ili9341_code);   
+    return mp_obj_new_int(ili9341_code);
 }
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ili9341_irq_mode_obj, 1, 2, mp_ili9341_irq_mode);
 
-
 static const mp_rom_map_elem_t hw_ili9341_globals_table[] = {
-    { MP_ROM_QSTR(MP_QSTR_irq_mode), MP_ROM_PTR(&mp_ili9341_irq_mode_obj) },
+    {MP_ROM_QSTR(MP_QSTR_irq_mode), MP_ROM_PTR(&mp_ili9341_irq_mode_obj)},
     // { MP_ROM_QSTR(MP_QSTR_IRQ_POLLING), MP_ROM_INT(ili9341_IRQ_POLLING) },
     // { MP_ROM_QSTR(MP_QSTR_IRQ_TRIGGER), MP_ROM_INT(ili9341_IRQ_TRIGGER) },
-    
+
 };
 
 static MP_DEFINE_CONST_DICT(hw_ili9341_globals, hw_ili9341_globals_table);
@@ -149,7 +161,6 @@ MP_DEFINE_CONST_OBJ_TYPE(
     MP_QSTR_ili9341c,
     MP_TYPE_FLAG_NONE,
     make_new, machine_hw_ili9341_make_new,
-    locals_dict, &hw_ili9341_globals
-);
+    locals_dict, &hw_ili9341_globals);
 
 MP_REGISTER_MODULE(MP_QSTR_ili9341c, machine_hw_ili9341_type);
