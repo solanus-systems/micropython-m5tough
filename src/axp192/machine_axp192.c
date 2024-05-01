@@ -43,9 +43,9 @@ typedef struct _machine_hw_axp192_obj_t {
 
 
 const mp_obj_type_t machine_hw_axp192_type;
-STATIC machine_hw_axp192_obj_t machine_hw_axp192_obj[I2C_NUM_MAX];
+static machine_hw_axp192_obj_t machine_hw_axp192_obj[I2C_NUM_MAX];
 
-STATIC void machine_hw_axp192_init(machine_hw_axp192_obj_t *self, uint32_t freq, uint32_t timeout_us, bool first_init) {
+static void machine_hw_axp192_init(machine_hw_axp192_obj_t *self, uint32_t freq, uint32_t timeout_us, bool first_init) {
     mp_int_t axp192_code = 0;
     // bus definition
     pSensorBusDef.i2cPort = I2C_NUM_0;
@@ -70,7 +70,7 @@ STATIC void machine_hw_axp192_init(machine_hw_axp192_obj_t *self, uint32_t freq,
     }
 }
 
-STATIC void machine_hw_axp192_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+static void machine_hw_axp192_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
 	//machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
 	
     //mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
@@ -120,7 +120,7 @@ mp_obj_t machine_hw_axp192_make_new(const mp_obj_type_t *type, size_t n_args, si
     return MP_OBJ_FROM_PTR(self);
 }
 
-STATIC mp_obj_t mp_axp192_dc_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_dc_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = AXP_FAIL;
 	if (n_args < 3) {
 		mp_raise_ValueError(MP_ERROR_TEXT("two arguments are required"));
@@ -157,9 +157,9 @@ STATIC mp_obj_t mp_axp192_dc_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
 
     return mp_obj_new_int(axp192_code);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_dc_voltage_obj, 1, 3, mp_axp192_dc_voltage);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_dc_voltage_obj, 1, 3, mp_axp192_dc_voltage);
 
-STATIC mp_obj_t mp_axp192_dc_enable(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_dc_enable(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = 0;
 	if (n_args < 3) {
 		mp_raise_ValueError(MP_ERROR_TEXT("two arguments are required"));
@@ -172,9 +172,9 @@ STATIC mp_obj_t mp_axp192_dc_enable(mp_uint_t n_args, const mp_obj_t *args)  {
     return mp_obj_new_int(axp192_code);
 
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_dc_enable_obj, 1, 3, mp_axp192_dc_enable);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_dc_enable_obj, 1, 3, mp_axp192_dc_enable);
 
-STATIC mp_obj_t mp_axp192_ldo_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_ldo_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = AXP_FAIL;
 	if (n_args < 3) {
 		mp_raise_ValueError(MP_ERROR_TEXT("two arguments are required"));
@@ -205,10 +205,10 @@ STATIC mp_obj_t mp_axp192_ldo_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
 
     return mp_obj_new_int(axp192_code);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_ldo_voltage_obj, 1, 3, mp_axp192_ldo_voltage);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_ldo_voltage_obj, 1, 3, mp_axp192_ldo_voltage);
 
 
-STATIC mp_obj_t mp_axp192_ldo_enable(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_ldo_enable(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = 0;
 	if (n_args < 3) {
 		mp_raise_ValueError(MP_ERROR_TEXT("two arguments are required"));
@@ -221,9 +221,9 @@ STATIC mp_obj_t mp_axp192_ldo_enable(mp_uint_t n_args, const mp_obj_t *args)  {
     return mp_obj_new_int(axp192_code);
 
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_ldo_enable_obj, 1, 3, mp_axp192_ldo_enable);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_ldo_enable_obj, 1, 3, mp_axp192_ldo_enable);
 
-STATIC mp_obj_t mp_axp192_set_bat_charge_current(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_set_bat_charge_current(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = 0;
 	if (n_args < 2) {
 		mp_raise_ValueError(MP_ERROR_TEXT("one argument is required"));
@@ -239,9 +239,9 @@ STATIC mp_obj_t mp_axp192_set_bat_charge_current(mp_uint_t n_args, const mp_obj_
     return mp_obj_new_int(axp192_code);
 
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_bat_charge_current_obj, 1, 2, mp_axp192_set_bat_charge_current);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_bat_charge_current_obj, 1, 2, mp_axp192_set_bat_charge_current);
 
-STATIC mp_obj_t mp_axp192_set_bat_charge_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_set_bat_charge_voltage(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = 0;
 	if (n_args < 2) {
 		mp_raise_ValueError(MP_ERROR_TEXT("one argument is required"));
@@ -257,9 +257,9 @@ STATIC mp_obj_t mp_axp192_set_bat_charge_voltage(mp_uint_t n_args, const mp_obj_
     return mp_obj_new_int(axp192_code);
 
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_bat_charge_voltage_obj, 1, 2, mp_axp192_set_bat_charge_voltage);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_bat_charge_voltage_obj, 1, 2, mp_axp192_set_bat_charge_voltage);
 
-STATIC mp_obj_t mp_axp192_enable_bat_charge(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_enable_bat_charge(mp_uint_t n_args, const mp_obj_t *args)  {
     int axp192_code = 0;
 	if (n_args < 2) {
 		mp_raise_ValueError(MP_ERROR_TEXT("one argument is required"));
@@ -277,9 +277,9 @@ STATIC mp_obj_t mp_axp192_enable_bat_charge(mp_uint_t n_args, const mp_obj_t *ar
     return mp_obj_new_int(axp192_code);
 
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_enable_bat_charge_obj, 1, 2, mp_axp192_enable_bat_charge);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_enable_bat_charge_obj, 1, 2, mp_axp192_enable_bat_charge);
 
-STATIC mp_obj_t mp_axp192_bat_charge_led_mode(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_bat_charge_led_mode(mp_uint_t n_args, const mp_obj_t *args)  {
     int axp192_code = 0;
 	if (n_args < 2) {
 		mp_raise_ValueError(MP_ERROR_TEXT("one argument is required"));
@@ -294,26 +294,26 @@ STATIC mp_obj_t mp_axp192_bat_charge_led_mode(mp_uint_t n_args, const mp_obj_t *
 
     return mp_obj_new_int(axp192_code);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_bat_charge_led_mode_obj, 1, 2, mp_axp192_bat_charge_led_mode);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_bat_charge_led_mode_obj, 1, 2, mp_axp192_bat_charge_led_mode);
 
 
-STATIC mp_obj_t mp_axp192_shutdown(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_shutdown(mp_uint_t n_args, const mp_obj_t *args)  {
     return mp_obj_new_int(apxShutdown());
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_shutdown_obj, 1, 1, mp_axp192_shutdown);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_shutdown_obj, 1, 1, mp_axp192_shutdown);
 
-STATIC mp_obj_t mp_axp192_get_temp(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_get_temp(mp_uint_t n_args, const mp_obj_t *args)  {
 	return mp_obj_new_float(getTemp());
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_get_temp_obj, 1, 1, mp_axp192_get_temp);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_get_temp_obj, 1, 1, mp_axp192_get_temp);
 
-STATIC mp_obj_t mp_axp192_limiting_off(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_limiting_off(mp_uint_t n_args, const mp_obj_t *args)  {
     int axp192_code = limitingOff();
 	return mp_obj_new_int(axp192_code);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_limiting_off_obj, 1, 1, mp_axp192_limiting_off);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_limiting_off_obj, 1, 1, mp_axp192_limiting_off);
 
-STATIC mp_obj_t mp_axp192_bat_status(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_bat_status(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_obj_t tuple[6];
     
     tuple[0] = mp_obj_new_int(isBatteryConnect());
@@ -325,10 +325,10 @@ STATIC mp_obj_t mp_axp192_bat_status(mp_uint_t n_args, const mp_obj_t *args)  {
 
     return mp_obj_new_tuple(6, tuple);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_bat_status_obj, 1, 1, mp_axp192_bat_status);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_bat_status_obj, 1, 1, mp_axp192_bat_status);
 
 
-STATIC mp_obj_t mp_axp192_set_gpio_mode(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_set_gpio_mode(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = 0;
 	if (n_args < 3) {
 		mp_raise_ValueError(MP_ERROR_TEXT("two arguments are required"));
@@ -341,9 +341,9 @@ STATIC mp_obj_t mp_axp192_set_gpio_mode(mp_uint_t n_args, const mp_obj_t *args) 
     return mp_obj_new_int(axp192_code);
 
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_gpio_mode_obj, 1, 3, mp_axp192_set_gpio_mode);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_gpio_mode_obj, 1, 3, mp_axp192_set_gpio_mode);
 
-// STATIC mp_obj_t mp_axp192_gpio_read(mp_uint_t n_args, const mp_obj_t *args)  {
+// static mp_obj_t mp_axp192_gpio_read(mp_uint_t n_args, const mp_obj_t *args)  {
 //     mp_int_t axp192_code = 0;
 //     if (n_args < 2) {
 // 		mp_raise_ValueError(MP_ERROR_TEXT("one argument is required"));
@@ -354,9 +354,9 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_set_gpio_mode_obj, 1, 3, mp
 
 // 	return mp_obj_new_int(axp192_code);
 // }
-// STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_gpio_read_obj, 1, 2, mp_axp192_gpio_read);
+// static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_gpio_read_obj, 1, 2, mp_axp192_gpio_read);
 
-STATIC mp_obj_t mp_axp192_gpio_write(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_axp192_gpio_write(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t axp192_code = 0;
     if (n_args < 3) {
 		mp_raise_ValueError(MP_ERROR_TEXT("two arguments are required"));
@@ -368,9 +368,9 @@ STATIC mp_obj_t mp_axp192_gpio_write(mp_uint_t n_args, const mp_obj_t *args)  {
 
 	return mp_obj_new_int(axp192_code);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_gpio_write_obj, 1, 3, mp_axp192_gpio_write);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_axp192_gpio_write_obj, 1, 3, mp_axp192_gpio_write);
 
-STATIC const mp_rom_map_elem_t hw_axp192_globals_table[] = {
+static const mp_rom_map_elem_t hw_axp192_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_get_temp), MP_ROM_PTR(&mp_axp192_get_temp_obj) },
     { MP_ROM_QSTR(MP_QSTR_dc_enable), MP_ROM_PTR(&mp_axp192_dc_enable_obj) },
     { MP_ROM_QSTR(MP_QSTR_set_dc_voltage), MP_ROM_PTR(&mp_axp192_dc_voltage_obj) },
@@ -416,7 +416,7 @@ STATIC const mp_rom_map_elem_t hw_axp192_globals_table[] = {
 
 };
 
-STATIC MP_DEFINE_CONST_DICT(hw_axp192_globals, hw_axp192_globals_table);
+static MP_DEFINE_CONST_DICT(hw_axp192_globals, hw_axp192_globals_table);
 
 MP_DEFINE_CONST_OBJ_TYPE(
     machine_hw_axp192_type,

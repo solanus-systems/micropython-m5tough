@@ -42,10 +42,10 @@ typedef struct _machine_hw_ili9341_obj_t {
 
 
 const mp_obj_type_t machine_hw_ili9341_type;
-STATIC TFT_t display;
-STATIC machine_hw_ili9341_obj_t machine_hw_ili9341_obj;
+static TFT_t display;
+static machine_hw_ili9341_obj_t machine_hw_ili9341_obj;
 
-STATIC void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
+static void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
     // mp_int_t ili9341_code = 0;
 
     mp_printf(&mp_plat_print, "STEPA [OK].\n");
@@ -59,7 +59,7 @@ STATIC void machine_hw_ili9341_internal(machine_hw_ili9341_obj_t *self) {
     mp_printf(&mp_plat_print, "LDC connection [OK].\n");
 }
 
-// STATIC void machine_hw_ili9341_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+// static void machine_hw_ili9341_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
 // 	machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
 	
 //     mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
@@ -117,7 +117,7 @@ mp_obj_t machine_hw_ili9341_make_new(const mp_obj_type_t *type, size_t n_args, s
     return MP_OBJ_FROM_PTR(self);
 }
 
-STATIC mp_obj_t mp_ili9341_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_ili9341_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t ili9341_code = -1;
     // uint8_t mode;
 
@@ -132,17 +132,17 @@ STATIC mp_obj_t mp_ili9341_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
 
     return mp_obj_new_int(ili9341_code);   
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ili9341_irq_mode_obj, 1, 2, mp_ili9341_irq_mode);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ili9341_irq_mode_obj, 1, 2, mp_ili9341_irq_mode);
 
 
-STATIC const mp_rom_map_elem_t hw_ili9341_globals_table[] = {
+static const mp_rom_map_elem_t hw_ili9341_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_irq_mode), MP_ROM_PTR(&mp_ili9341_irq_mode_obj) },
     // { MP_ROM_QSTR(MP_QSTR_IRQ_POLLING), MP_ROM_INT(ili9341_IRQ_POLLING) },
     // { MP_ROM_QSTR(MP_QSTR_IRQ_TRIGGER), MP_ROM_INT(ili9341_IRQ_TRIGGER) },
     
 };
 
-STATIC MP_DEFINE_CONST_DICT(hw_ili9341_globals, hw_ili9341_globals_table);
+static MP_DEFINE_CONST_DICT(hw_ili9341_globals, hw_ili9341_globals_table);
 
 MP_DEFINE_CONST_OBJ_TYPE(
     machine_hw_ili9341_type,

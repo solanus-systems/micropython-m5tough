@@ -44,9 +44,9 @@ typedef struct _machine_hw_bm8563_obj_t {
 
 
 const mp_obj_type_t machine_hw_bm8563_type;
-STATIC machine_hw_bm8563_obj_t machine_hw_bm8563_obj[I2C_NUM_MAX];
+static machine_hw_bm8563_obj_t machine_hw_bm8563_obj[I2C_NUM_MAX];
 
-STATIC void machine_hw_bm8563_init(machine_hw_bm8563_obj_t *self, uint32_t freq, uint32_t timeout_us, bool first_init) {
+static void machine_hw_bm8563_init(machine_hw_bm8563_obj_t *self, uint32_t freq, uint32_t timeout_us, bool first_init) {
     mp_int_t bm8563_code = 0;
     // bus definition
     pSensorBusDef.i2cPort = I2C_NUM_0;
@@ -71,7 +71,7 @@ STATIC void machine_hw_bm8563_init(machine_hw_bm8563_obj_t *self, uint32_t freq,
     }
 }
 
-// STATIC void machine_hw_bm8563_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+// static void machine_hw_bm8563_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
 // 	machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
 	
 //     mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
@@ -121,7 +121,7 @@ mp_obj_t machine_hw_bm8563_make_new(const mp_obj_type_t *type, size_t n_args, si
     return MP_OBJ_FROM_PTR(self);
 }
 
-STATIC mp_obj_t mp_bm8563_datetime(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_bm8563_datetime(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t bm8563_code = PCF8563_ERROR_NOTTY;
 	struct tm time;
     mp_obj_t tuple[7];
@@ -161,10 +161,10 @@ STATIC mp_obj_t mp_bm8563_datetime(mp_uint_t n_args, const mp_obj_t *args)  {
     }
     
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_datetime_obj, 1, 8, mp_bm8563_datetime);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_datetime_obj, 1, 8, mp_bm8563_datetime);
 
 
-STATIC mp_obj_t mp_bm8563_alarm(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_bm8563_alarm(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t bm8563_code = PCF8563_ERROR_NOTTY;
 	struct tm time;
     mp_obj_t tuple[7];
@@ -202,10 +202,10 @@ STATIC mp_obj_t mp_bm8563_alarm(mp_uint_t n_args, const mp_obj_t *args)  {
     }
     
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_alarm_obj, 1, 7, mp_bm8563_alarm);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_alarm_obj, 1, 7, mp_bm8563_alarm);
 
 
-STATIC mp_obj_t mp_bm8563_timer(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_bm8563_timer(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t bm8563_code = PCF8563_ERROR_NOTTY;
     uint8_t timer, clock;
 
@@ -239,10 +239,10 @@ STATIC mp_obj_t mp_bm8563_timer(mp_uint_t n_args, const mp_obj_t *args)  {
     }
     
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_timer_obj, 1, 3, mp_bm8563_timer);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_timer_obj, 1, 3, mp_bm8563_timer);
 
 
-STATIC mp_obj_t mp_bm8563_activate_irq(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_bm8563_activate_irq(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t bm8563_code = PCF8563_ERROR_NOTTY;
     uint8_t data = 0, type = 0;
     bool clear = false;
@@ -278,10 +278,10 @@ STATIC mp_obj_t mp_bm8563_activate_irq(mp_uint_t n_args, const mp_obj_t *args)  
 
     return mp_obj_new_int(bm8563_code);   
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_activate_irq_obj, 1, 3, mp_bm8563_activate_irq);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_activate_irq_obj, 1, 3, mp_bm8563_activate_irq);
 
 
-STATIC mp_obj_t mp_bm8563_activate_timer(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_bm8563_activate_timer(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t bm8563_code = PCF8563_ERROR_NOTTY;
     bool start = true;
 
@@ -293,10 +293,10 @@ STATIC mp_obj_t mp_bm8563_activate_timer(mp_uint_t n_args, const mp_obj_t *args)
     
     return mp_obj_new_int(bm8563_code);   
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_activate_timer_obj, 1, 2, mp_bm8563_activate_timer);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_bm8563_activate_timer_obj, 1, 2, mp_bm8563_activate_timer);
 
 
-STATIC const mp_rom_map_elem_t hw_bm8563_globals_table[] = {
+static const mp_rom_map_elem_t hw_bm8563_globals_table[] = {
 
     { MP_ROM_QSTR(MP_QSTR_datetime), MP_ROM_PTR(&mp_bm8563_datetime_obj) },
     { MP_ROM_QSTR(MP_QSTR_alarm), MP_ROM_PTR(&mp_bm8563_alarm_obj) },
@@ -312,7 +312,7 @@ STATIC const mp_rom_map_elem_t hw_bm8563_globals_table[] = {
     
 };
 
-STATIC MP_DEFINE_CONST_DICT(hw_bm8563_globals, hw_bm8563_globals_table);
+static MP_DEFINE_CONST_DICT(hw_bm8563_globals, hw_bm8563_globals_table);
 
 MP_DEFINE_CONST_OBJ_TYPE(
     machine_hw_bm8563_type,

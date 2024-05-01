@@ -44,9 +44,9 @@ typedef struct _machine_hw_ft6336u_obj_t {
 
 
 const mp_obj_type_t machine_hw_ft6336u_type;
-STATIC machine_hw_ft6336u_obj_t machine_hw_ft6336u_obj[I2C_NUM_MAX];
+static machine_hw_ft6336u_obj_t machine_hw_ft6336u_obj[I2C_NUM_MAX];
 
-STATIC void machine_hw_ft6336u_init(machine_hw_ft6336u_obj_t *self, uint32_t freq, uint32_t timeout_us, bool first_init) {
+static void machine_hw_ft6336u_init(machine_hw_ft6336u_obj_t *self, uint32_t freq, uint32_t timeout_us, bool first_init) {
     mp_int_t ft6336u_code = 0;
     // bus definition
     pSensorBusDef.i2cPort = I2C_NUM_0;
@@ -71,7 +71,7 @@ STATIC void machine_hw_ft6336u_init(machine_hw_ft6336u_obj_t *self, uint32_t fre
     }
 }
 
-// STATIC void machine_hw_ft6336u_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+// static void machine_hw_ft6336u_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
 // 	machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
 	
 //     mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
@@ -121,7 +121,7 @@ mp_obj_t machine_hw_ft6336u_make_new(const mp_obj_type_t *type, size_t n_args, s
     return MP_OBJ_FROM_PTR(self);
 }
 
-STATIC mp_obj_t mp_ft6336u_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_ft6336u_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_int_t ft6336u_code = FT6336U_ERROR_NOTTY;
     uint8_t mode;
 
@@ -136,10 +136,10 @@ STATIC mp_obj_t mp_ft6336u_irq_mode(mp_uint_t n_args, const mp_obj_t *args)  {
 
     return mp_obj_new_int(ft6336u_code);   
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_irq_mode_obj, 1, 2, mp_ft6336u_irq_mode);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_irq_mode_obj, 1, 2, mp_ft6336u_irq_mode);
 
 
-STATIC mp_obj_t mp_ft6336u_touch_status(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_ft6336u_touch_status(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_obj_t tuple[2];
     
     tuple[0] = mp_obj_new_int(read_gesture_id());
@@ -147,9 +147,9 @@ STATIC mp_obj_t mp_ft6336u_touch_status(mp_uint_t n_args, const mp_obj_t *args) 
 
     return mp_obj_new_tuple(2, tuple);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_touch_status_obj, 1, 1, mp_ft6336u_touch_status);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_touch_status_obj, 1, 1, mp_ft6336u_touch_status);
 
-STATIC mp_obj_t mp_ft6336u_touch_check(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_ft6336u_touch_check(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_obj_t tuple[3];
     
     tuple[0] = mp_obj_new_int(read_firmware_id());
@@ -158,10 +158,10 @@ STATIC mp_obj_t mp_ft6336u_touch_check(mp_uint_t n_args, const mp_obj_t *args)  
 
     return mp_obj_new_tuple(3, tuple);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_touch_check_obj, 1, 1, mp_ft6336u_touch_check);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_touch_check_obj, 1, 1, mp_ft6336u_touch_check);
 
 
-STATIC mp_obj_t mp_ft6336u_touch_points(mp_uint_t n_args, const mp_obj_t *args)  {
+static mp_obj_t mp_ft6336u_touch_points(mp_uint_t n_args, const mp_obj_t *args)  {
     mp_obj_t tuple_pX[6];
 
     FT6336U_TouchPointType touchPoint = touchPointScan();
@@ -176,10 +176,10 @@ STATIC mp_obj_t mp_ft6336u_touch_points(mp_uint_t n_args, const mp_obj_t *args) 
 
     return mp_obj_new_tuple(6, tuple_pX);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_touch_points_obj, 1, 1, mp_ft6336u_touch_points);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_ft6336u_touch_points_obj, 1, 1, mp_ft6336u_touch_points);
 
 
-STATIC const mp_rom_map_elem_t hw_ft6336u_globals_table[] = {
+static const mp_rom_map_elem_t hw_ft6336u_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_irq_mode), MP_ROM_PTR(&mp_ft6336u_irq_mode_obj) },
     { MP_ROM_QSTR(MP_QSTR_status), MP_ROM_PTR(&mp_ft6336u_touch_status_obj) },
     { MP_ROM_QSTR(MP_QSTR_check), MP_ROM_PTR(&mp_ft6336u_touch_check_obj) },
@@ -189,7 +189,7 @@ STATIC const mp_rom_map_elem_t hw_ft6336u_globals_table[] = {
     
 };
 
-STATIC MP_DEFINE_CONST_DICT(hw_ft6336u_globals, hw_ft6336u_globals_table);
+static MP_DEFINE_CONST_DICT(hw_ft6336u_globals, hw_ft6336u_globals_table);
 
 MP_DEFINE_CONST_OBJ_TYPE(
     machine_hw_ft6336u_type,
