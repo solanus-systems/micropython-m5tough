@@ -73,13 +73,13 @@ static void machine_hw_axp192_init(machine_hw_axp192_obj_t *self, uint32_t freq,
     }
 }
 
-static void machine_hw_axp192_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind)
-{
-    // machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
+// static void machine_hw_axp192_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind)
+// {
+//     machine_hw_mpu6886_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
-    // mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
-    //     self->port, self->scl, self->sda, I2C_APB_CLK_FREQ / (h + l));
-}
+//     mp_printf(print, "COPTER(%u, scl=%u, sda=%u, freq=%u)",
+//         self->port, self->scl, self->sda, I2C_APB_CLK_FREQ / (h + l));
+// }
 
 mp_obj_t machine_hw_axp192_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *all_args)
 {
