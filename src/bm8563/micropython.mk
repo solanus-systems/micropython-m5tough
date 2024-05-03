@@ -1,4 +1,0 @@
-BM8563_MOD_DIR := $(USERMOD_DIR)
-SRC_USERMOD += $(addprefix $(BM8563_MOD_DIR)/, machine_bm8563.c)
-CFLAGS_USERMOD += -I$(BM8563_MOD_DIR)
-

@@ -3,7 +3,7 @@ set(SDKCONFIG_DEFAULTS
     boards/sdkconfig.ble
     boards/sdkconfig.240mhz
     boards/sdkconfig.spiram
-    boards/M5STACK_TOUGH/sdkconfig.board
+    boards/M5TOUGH/sdkconfig.board
 )
 
 set(LV_CFLAGS -DLV_COLOR_DEPTH=16 -DLV_COLOR_16_SWAP=1)
