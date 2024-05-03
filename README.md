@@ -1,95 +1,120 @@
 # MicroPython for M5Stack TOUGH
 
-This repository extends LV-MicroPython for using it on the M5Stack TOUGH. It adds support for the:
+This repository adds a board definition for the [M5Stack Tough](https://shop.m5stack.com/products/m5stack-tough-esp32-iot-development-board-kit?variant=40644956160172) for use with `lv_micropython`.
 
-* ILI9342C: a-Si TFT LCD Single Chip Driver. 
-* BM8563: a CMOS1 Real-Time Clock (RTC) and calendar optimized for low power consumption. 
-* AXP192: a enhanced single Cell Li-Battery and Power System Management IC
+## Developing
 
-## Examples
-More examples can be found inside the `examples` folder.
+> [!NOTE]
+> These instructions assume you are working on a Mac with Apple silicon. For different architectures or operating systems, it may be helpful to start from [LV-MicroPython's setup documentation](https://github.com/lvgl/lv_micropython/blob/master/ports/esp32/README.md#setting-up-the-toolchain-and-esp-idf).
 
-|           |           |
-|:---------:|:---------:|
-|  Drag Me Example         |   Buttons Example     |
-|   ![dragme example](docs/dragme_example.gif)         |  ![buttons example](docs/buttons_example.gif)         |
+### Setup
 
-```python
-import gc
-import lvgl as lv
+Clone this repository:
 
-from axpili9342 import ili9341
-from ft6x36c import ft6x36
-
-display = ili9341()
-touch = ft6x36()
-
-def drag_event_handler(e):
-    obj = e.get_target()
-    indev = lv.indev_get_act()
-    vect = lv.point_t()
-    indev.get_vect(vect)
-    x = obj.get_x() + vect.x
-    y = obj.get_y() + vect.y
-    obj.set_pos(x, y)
-
-obj = lv.obj(lv.scr_act())
-obj.set_size(150, 100)
-obj.add_event_cb(drag_event_handler, lv.EVENT.PRESSING, None)
-
-label = lv.label(obj)
-label.set_text("Drag me")
-label.center()
-
-```
-
-## Firmware
-I've included a compiled MicroPython firmware (check the `firmware` folder). The firmware was compiled using following versions and hashes:
-
-* esp-idf v4.4.x - [`b64925c56`](https://github.com/espressif/esp-idf/commit/b64925c5673206100eaf4337d064d0fe3507eaec)
-* MicroPython v1.18-599-bf62dfc784-dirty - [`bf62dfc784`](https://github.com/lvgl/lv_micropython/commit/bf62dfc78497d47ced3b0931a270e553d4d2552b)
-
-
-To flash it to the board, you need to type the following:
 ```sh
-esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
-esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 1152000 write_flash -z 0x1000 lv_micropython_m5core2_bf62dfc784_esp32_idf4_4_x.bin
+git clone https://github.com/solanus-systems/micropython-m5tough.git
 ```
-More information is available in this [tutorial](https://lemariva.com/blog/2022/01/micropython-upgraded-support-cameras-m5camera-esp32-cam-etc).
 
-If you want to compile your driver from scratch follow the next section:
+Clone LV-MicroPython, including its submodules:
 
-## DIY
+```sh
+git clone --recursive https://github.com/lvgl/lv_micropython.git
+```
 
-Read this section if you want to include the camera support to MicroPython from scratch. To do that follow these steps:
-  
-- Note 1: if you get stuck, those pages are a good help:
-  - https://github.com/micropython/micropython/tree/master/ports/esp32
-  - https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/index.html#installation-step-by-step
+Clone esp-idf, including its submodules, using the latest version known to work with LV-MicroPython:
 
-- Note 2: Up to micropython version 1.14, the build tool for the esp32 port is Make. Starting with this [PR](https://github.com/micropython/micropython/pull/6892), it is CMAKE. You can find more discussion in this [micropython forum blog post](https://forum.micropython.org/viewtopic.php?f=18&t=9820)
+```sh
+git clone -b v4.4.6 --recursive https://github.com/espressif/esp-idf.git
+```
 
+Install esp-idf:
 
-1. Clone the MicroPython repository:
-    ```
-    git clone --recursive https://github.com/littlevgl/lv_micropython.git
-    ```
-    Note: The MicroPython repo changes a lot, I've done this using the version with the hash mentioned above.
+```sh
+# in esp-idf/
+./install.sh
+```
 
-    :warning: If you want to directly replace the original files with the provided in this repository, be sure that you've taken the same commit hash. MicroPython changes a lot, and you'll compiling issues if you ignore this warning.
+Install cmake using Homebrew:
 
-2. Copy the files and folders inside the `boards` folder into `micropython/ports/esp32/boards` or use a symbolic link (`ln -s`).
-3. Create a `m5core2` folder inside `~/esp/esp-idf/components` and copy the files and folders inside the `components` inside that folder.
-4. Compile the firmware by typing following commands:
-    ```
-    cd micropython/ports/esp32
-    . $HOME/esp/esp-idf/export.sh
-    make USER_C_MODULES=../../../../micropython-core2/src/micropython.cmake BOARD=M5STACK_CORE2 all
-    ```
-    Note that the folder `micropython-core2` should be in the same folder level as the `micropython`. Otherwise, you'll need to change the path (`../../../../micropython-core2/src/`) to the `micropython.cmake` file.
-5. Deploy the firmware into the ESP32 by typing:
-    ```
-    cd micropython/ports/esp32
-    esptool.py --port /dev/ttyUSB0 erase_flash
-    esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 1152000 write_flash -z 0x1000 build-M5STACK_CORE2/firmware.bin
-    ```
+```sh
+brew install cmake
+```
+
+Link the m5tough custom board definition into the LV-MicroPython boards directory:
+
+```sh
+ln -s /path/to/micropython-m5tough/boards/M5TOUGH /path/to/lv_micropython/ports/esp32/boards/M5TOUGH
+```
+
+Build the micropython cross-compiler:
+
+```sh
+# in lv_micropython/
+make -C mpy-cross
+```
+
+### Compiling
+
+Ensure the ESP-IDF environment is set up:
+
+```sh
+# in esp-idf/
+source ./export.sh
+```
+
+Compile the firmware:
+
+```sh
+# in lv_micropython/ports/esp32
+make submodules
+make BOARD=M5TOUGH all
+```
+
+### Flashing
+
+> [!NOTE]
+> Check the port name of your M5Tough before running the following commands. You
+> can find it by running `ls /dev/tty.usb*` in the terminal when the M5 is connected
+> to your computer via USB cable.
+
+Erase existing firmware on the M5Tough (if e.g. UIFlow is currently installed):
+
+```sh
+# in lv_micropython/ports/esp32
+esptool.py --port /dev/tty.usbserial-54D80277501 --baud 115200 --before default_reset --after hard_reset --chip esp32 erase_flash
+```
+
+Deploy the firmware to the M5Tough:
+
+```sh
+# in lv_micropython/ports/esp32
+esptool.py --port /dev/tty.usbserial-54D80277501 --baud 115200 --before default_reset --after hard_reset --chip esp32 write_flash -z 0x1000 build-M5TOUGH/firmware.bin
+```
+
+idf.py build
+
+make erase (if this is the first time uploading the firmware)
+
+### Updating
+
+To update the micropython version, you need to perform these steps in the lv_micropython directory:
+
+```sh
+git checkout v1.20.0 # or the version you want to update to
+git submodule update --recursive
+make -C mpy-cross
+```
+
+The process to update esp-idf is similar:
+
+```sh
+git checkout release/v4.4 # or the version you want to update to
+git submodule update --recursive
+./install.sh
+```
+
+Then, you can build the firmware as described above.
+
+## See Also
+
+- https://github.com/russhughes/ili9342c_mpy
