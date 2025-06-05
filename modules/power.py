@@ -1,5 +1,6 @@
-import axp192
 from time import sleep
+
+import axp192
 
 SDA = 21
 SCL = 22
@@ -27,7 +28,7 @@ class Power:
         if skip_init:
             return
 
-        print("Initialising M5Core2 power management")
+        print("Initialising M5Tough power management")
 
         self.axp.twiddle(axp192.VBUS_IPSOUT_CHANNEL, 0b11111011, 0x02)
         print("  Vbus limit off")
@@ -40,7 +41,7 @@ class Power:
         print("  RTC battery charging enabled (3v, 200uA)")
 
         # If you set this too low or turn it off, you will need to do I2C mouth-to-mouth
-        # with another device to get your M5Core2 to come alive again. So don't do that.
+        # with another device to get your M5Tough to come alive again. So don't do that.
         self.axp.write(ESP_POWER, 3.35)
         print("  ESP32 power voltage set to 3.35v")
 
