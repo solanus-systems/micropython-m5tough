@@ -21,10 +21,10 @@ Clone LV-MicroPython, including its submodules:
 git clone --recursive https://github.com/lvgl/lv_micropython.git
 ```
 
-Clone esp-idf, including its submodules, using the latest version known to work with LV-MicroPython:
+Clone esp-idf, including its submodules. Check [the `lv_micropython` README](https://github.com/lvgl/lv_micropython/blob/master/ports/esp32/README.md) for the latest versions of esp-idf known to work.
 
 ```sh
-git clone -b v4.4.6 --recursive https://github.com/espressif/esp-idf.git
+git clone -b v5.2.2 --recursive https://github.com/espressif/esp-idf.git
 ```
 
 Install esp-idf:
@@ -43,7 +43,7 @@ brew install cmake
 Link the m5tough custom board definition into the LV-MicroPython boards directory:
 
 ```sh
-ln -s /path/to/micropython-m5tough/boards/M5TOUGH /path/to/lv_micropython/ports/esp32/boards/M5TOUGH
+ln -s /path/to/micropython-m5tough /path/to/lv_micropython/ports/esp32/boards/M5STACK_TOUGH
 ```
 
 Build the micropython cross-compiler:
@@ -67,9 +67,11 @@ Compile the firmware:
 ```sh
 # in lv_micropython/ports/esp32
 make submodules
-make BOARD=M5TOUGH all
+BOARD=M5STACK_TOUGH make -j $(nproc)
 ```
 
+Firmware will be output to `lv_micropython/ports/esp32/build-M5STACK_TOUGH/firmware.bin`.
+  
 ### Flashing
 
 > [!NOTE]
@@ -88,12 +90,8 @@ Deploy the firmware to the M5Tough:
 
 ```sh
 # in lv_micropython/ports/esp32
-esptool.py --port /dev/tty.usbserial-54D80277501 --baud 115200 --before default_reset --after hard_reset --chip esp32 write_flash -z 0x1000 build-M5TOUGH/firmware.bin
+esptool.py --port /dev/tty.usbserial-54D80277501 --baud 115200 --before default_reset --after hard_reset --chip esp32 write_flash --flash_mode dio --flash_size 16MB --flash_freq 80m 0x1000 build-M5STACK_TOUGH/bootloader/bootloader.bin 0x8000 build-M5STACK_TOUGH/partition_table/partition-table.bin 0x10000 build-M5STACK_TOUGH/micropython.bin
 ```
-
-idf.py build
-
-make erase (if this is the first time uploading the firmware)
 
 ### Updating
 
